@@ -37,7 +37,4 @@ build/
 ### Mac OS ###
 .DS_Store
 
-### allure ###
-.allure
-
 vcs.xml
