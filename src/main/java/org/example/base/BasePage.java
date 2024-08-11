@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
     private final long waitTime;
-    private static final Logger logger = LoggerFactory.getLogger(BasePage.class); // Logger 초기화
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -32,20 +29,20 @@ public class BasePage {
     public String getTitle() {
         try {
             return driver.getTitle();
-        } catch (Exception e) {
-            System.out.println("Title 가져오기 에러: " + e.getMessage());
-            throw e;
+        } catch (Exception error) {
+            System.out.println("DOM Page Title 가져오기 에러: " + error.getMessage());
+            throw error;
         }
     }
 
     public void waitForElementToBeVisible(WebElement element) {
         try {
             wait.until(ExpectedConditions.visibilityOf(element));
-        } catch (Exception e) {
-            if (e instanceof org.openqa.selenium.TimeoutException) {
+        } catch (Exception error) {
+            if (error instanceof org.openqa.selenium.TimeoutException) {
                 System.out.println("TimeoutException 발생: 엘리먼트를 최대 " + waitTime / 1000 + "초 만큼 기다렸지만 찾을 수 없습니다.");
             } else {
-                throw e;
+                throw error;
             }
         }
     }
@@ -55,9 +52,9 @@ public class BasePage {
             Set<String> windowHandles = driver.getWindowHandles();
             List<String> windows = new ArrayList<>(windowHandles);
             driver.switchTo().window(windows.get(number));
-        } catch (Exception e) {
-            System.out.println("윈도우 전환 에러: " + e.getMessage());
-            throw e;
+        } catch (Exception error) {
+            System.out.println("윈도우 전환 에러: " + error.getMessage());
+            throw error;
         }
     }
 
@@ -67,7 +64,7 @@ public class BasePage {
         js.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, "style", "border: " + border + "px solid " + color + ";");
         try {
             Thread.sleep(effectTime);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException error) {
             Thread.currentThread().interrupt();
         }
         js.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, "style", originalStyle);
@@ -78,9 +75,9 @@ public class BasePage {
             waitForElementToBeVisible(element);
             highlight(element, 100, "#FF0000", 5); // highlight 호출
             element.isDisplayed();
-        } catch (Exception e) {
-            System.out.println("Display Error 발생: " + e.getMessage());
-            throw e;
+        } catch (Exception error) {
+            System.out.println("Display Error 발생: " + error.getMessage());
+            throw error;
         }
     }
 
@@ -89,9 +86,9 @@ public class BasePage {
             waitForElementToBeVisible(element);
             highlight(element, 100, "#FF0000", 5); // highlight 호출
             element.click();
-        } catch (Exception e) {
-            System.out.println("Click Error 발생: " + e.getMessage());
-            throw e;
+        } catch (Exception error) {
+            System.out.println("Click Error 발생: " + error.getMessage());
+            throw error;
         }
     }
 
@@ -100,9 +97,9 @@ public class BasePage {
             waitForElementToBeVisible(element);
             highlight(element, 100, "#FF0000", 5); // highlight 호출
             element.sendKeys(text);
-        } catch (Exception e) {
-            System.out.println("Input Error 발생: " + e.getMessage());
-            throw e;
+        } catch (Exception error) {
+            System.out.println("Input Error 발생: " + error.getMessage());
+            throw error;
         }
     }
 
@@ -110,9 +107,9 @@ public class BasePage {
         try {
             waitForElementToBeVisible(element);
             return element.getText();
-        } catch (Exception e) {
-            System.out.println("Text Error 발생: " + e.getMessage());
-            throw e;
+        } catch (Exception error) {
+            System.out.println("Text Error 발생: " + error.getMessage());
+            throw error;
         }
     }
 
